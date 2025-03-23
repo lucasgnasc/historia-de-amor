@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Amor</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 3px solid white;
+        }
+
+        #contador {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        #frase {
+            font-size: 1.2em;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: white;
+            color: #ff758c;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff758c;
+            color: white;
+        }
+
+        /* Corações animados */
+        .coracao {
+            position: absolute;
+            font-size: 24px;
+            color: red;
+            opacity: 0.8;
+            animation: subir 5s linear infinite;
+        }
+
+        @keyframes subir {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Nosso Amor</h1>
+        <img id="foto" src="nosso-amor.jpg" alt="Nossa Foto">
+        <p>Estamos juntos há:</p>
+        <div id="contador"></div>
+        <p id="frase">"O amor cresce a cada segundo que passa ao seu lado!" 💖</p>
+        <button onclick="mudarTema()">Mudar Tema</button>
+    </div>
+
+    <script>
+        function calcularTempo() {
+            const dataInicio = new Date("2024-03-02T00:00:00"); // Data que vocês começaram
+            const agora = new Date();
+            const diferenca = agora - dataInicio;
+
+            const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365));
+            const meses = Math.floor((diferenca % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const dias = Math.floor((diferenca % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            document.getElementById("contador").innerHTML = `
+                ${anos} anos, ${meses} meses, ${dias} dias, 
+                ${horas} horas, ${minutos} minutos e ${segundos} segundos
+            `;
+
+            setTimeout(calcularTempo, 1000);
+        }
+
+        function mudarTema() {
+            let body = document.body;
+            if (body.style.background.includes("ff9a9e")) {
+                body.style.background = "linear-gradient(to right, #2c3e50, #4ca1af)";
+                document.getElementById("frase").innerHTML = "O amor é como o céu noturno, infinito e cheio de estrelas! 🌌✨";
+            } else {
+                body.style.background = "linear-gradient(to right, #ff9a9e, #fad0c4)";
+                document.getElementById("frase").innerHTML = "O amor cresce a cada segundo que passa ao seu lado! 💖";
+            }
+        }
+
+        function criarCoracao() {
+            const coracao = document.createElement("div");
+            coracao.classList.add("coracao");
+            coracao.innerHTML = "❤️";
+            coracao.style.left = Math.random() * 100 + "vw";
+            coracao.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(coracao);
+
+            setTimeout(() => {
+                coracao.remove();
+            }, 5000);
+        }
+
+        setInterval(criarCoracao, 500);
+        calcularTempo();
+    </script>
+</body>
+</html>
