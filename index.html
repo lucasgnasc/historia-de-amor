@@ -1,143 +1,176 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosso Amor</title>
+    <title>A vida ao seu lado ❤️</title>
     <style>
-        /* Estilos gerais */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
+            transition: background 0.5s, color 0.5s;
         }
 
-        #container {
+        .container {
+            position: relative;
             max-width: 600px;
             margin: 50px auto;
-            background: rgba(255, 255, 255, 0.2);
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        img {
-            width: 100%;
-            max-width: 250px;
-            border-radius: 15px;
-            margin: 15px 0;
-            border: 3px solid white;
+            border-radius: 10px;
+            transition: background 0.5s, color 0.5s;
         }
 
         #contador {
-            font-size: 1.5em;
+            font-size: 24px;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 20px;
         }
 
-        #frase {
-            font-size: 1.2em;
-            font-style: italic;
-            margin-bottom: 20px;
+        #poema {
+            font-size: 20px;
+            margin: 20px;
         }
 
-        button {
-            background: white;
-            color: #ff758c;
-            border: none;
+        #mudarTema {
             padding: 10px 20px;
-            font-size: 1em;
-            border-radius: 10px;
+            font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s;
         }
 
-        button:hover {
-            background: #ff758c;
+        #imagem {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: opacity 0.5s;
+        }
+
+        .tema-romantico {
+            background: pink;
+            color: crimson;
+        }
+
+        .tema-romantico .container {
+            background: white;
+        }
+
+        .tema-romantico #mudarTema {
+            background: crimson;
             color: white;
         }
 
-        /* Corações animados */
-        .coracao {
-            position: absolute;
-            font-size: 24px;
-            color: red;
-            opacity: 0.8;
-            animation: subir 5s linear infinite;
+        .tema-romantico #mudarTema:hover {
+            background: darkred;
         }
 
-        @keyframes subir {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+        .tema-estrelado {
+            background: #0a043c;
+            color: white;
+        }
+
+        .tema-estrelado .container {
+            background: #161b33;
+        }
+
+        .tema-estrelado #mudarTema {
+            background: lightblue;
+            color: black;
+        }
+
+        .tema-estrelado #mudarTema:hover {
+            background: deepskyblue;
+        }
+
+        .decoracao {
+            position: fixed;
+            font-size: 30px;
+            opacity: 0.7;
+            animation: flutuar 5s infinite ease-in-out;
+        }
+
+        @keyframes flutuar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
-<body>
-    <div id="container">
-        <h1>Nosso Amor</h1>
-        <img id="foto" src="nosso-amor.jpg" alt="Nossa Foto">
-        <p>Estamos juntos há:</p>
-        <div id="contador"></div>
-        <p id="frase">"O amor cresce a cada segundo que passa ao seu lado!" 💖</p>
-        <button onclick="mudarTema()">Mudar Tema</button>
+<body class="tema-romantico">
+
+    <div class="container">
+        <h1>A vida ao seu lado ❤️</h1>
+        <img id="imagem" src="nosso-amor.jpg" alt="Nosso Amor">
+        <p id="contador"></p>
+        <p id="poema">"Desde o dia em que te vi, soube que meu coração era seu..."</p>
+        <button id="mudarTema">Mudar Tema</button>
     </div>
 
     <script>
-        function calcularTempo() {
-            const dataInicio = new Date("2024-03-02T00:00:00"); // Data que vocês começaram
+        const dataInicial = new Date("2024-03-02T00:00:00");
+        const body = document.body;
+        const btnMudarTema = document.getElementById("mudarTema");
+        const imagem = document.getElementById("imagem");
+        const poema = document.getElementById("poema");
+        const contador = document.getElementById("contador");
+
+        function atualizarContador() {
             const agora = new Date();
-            const diferenca = agora - dataInicio;
+            let diferenca = agora - dataInicial;
 
-            const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365));
-            const meses = Math.floor((diferenca % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-            const dias = Math.floor((diferenca % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
-            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+            let segundos = Math.floor((diferenca / 1000) % 60);
+            let minutos = Math.floor((diferenca / 1000 / 60) % 60);
+            let horas = Math.floor((diferenca / 1000 / 60 / 60) % 24);
+            let dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            let meses = Math.floor(dias / 30);
+            let anos = Math.floor(meses / 12);
 
-            document.getElementById("contador").innerHTML = `
-                ${anos} anos, ${meses} meses, ${dias} dias, 
-                ${horas} horas, ${minutos} minutos e ${segundos} segundos
-            `;
+            meses = meses % 12;
+            dias = dias % 30;
 
-            setTimeout(calcularTempo, 1000);
+            contador.innerHTML = `Estamos juntos há: ${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
         }
 
-        function mudarTema() {
-            let body = document.body;
-            if (body.style.background.includes("ff9a9e")) {
-                body.style.background = "linear-gradient(to right, #2c3e50, #4ca1af)";
-                document.getElementById("frase").innerHTML = "O amor é como o céu noturno, infinito e cheio de estrelas! 🌌✨";
-            } else {
-                body.style.background = "linear-gradient(to right, #ff9a9e, #fad0c4)";
-                document.getElementById("frase").innerHTML = "O amor cresce a cada segundo que passa ao seu lado! 💖";
+        function criarDecoracao(tipo) {
+            for (let i = 0; i < 20; i++) {
+                let decoracao = document.createElement("div");
+                decoracao.classList.add("decoracao");
+                decoracao.innerHTML = tipo;
+                decoracao.style.left = Math.random() * 100 + "vw";
+                decoracao.style.top = Math.random() * 100 + "vh";
+                body.appendChild(decoracao);
             }
         }
 
-        function criarCoracao() {
-            const coracao = document.createElement("div");
-            coracao.classList.add("coracao");
-            coracao.innerHTML = "❤️";
-            coracao.style.left = Math.random() * 100 + "vw";
-            coracao.style.animationDuration = Math.random() * 3 + 2 + "s";
-            document.body.appendChild(coracao);
-
-            setTimeout(() => {
-                coracao.remove();
-            }, 5000);
+        function removerDecoracao() {
+            document.querySelectorAll(".decoracao").forEach(el => el.remove());
         }
 
-        setInterval(criarCoracao, 500);
-        calcularTempo();
+        criarDecoracao("❤️");
+
+        btnMudarTema.addEventListener("click", () => {
+            if (body.classList.contains("tema-romantico")) {
+                body.classList.remove("tema-romantico");
+                body.classList.add("tema-estrelado");
+                imagem.src = "estrelada.jpg";
+                poema.innerHTML = `"O amor é como uma estrela, brilha mesmo na escuridão..."`;
+                removerDecoracao();
+                criarDecoracao("✨");
+            } else {
+                body.classList.remove("tema-estrelado");
+                body.classList.add("tema-romantico");
+                imagem.src = "nosso-amor.jpg";
+                poema.innerHTML = `"Desde o dia em que te vi, soube que meu coração era seu..."`;
+                removerDecoracao();
+                criarDecoracao("❤️");
+            }
+        });
+
+        setInterval(atualizarContador, 1000);
+        atualizarContador();
     </script>
+
 </body>
 </html>
